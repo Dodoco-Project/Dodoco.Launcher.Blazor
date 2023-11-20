@@ -1,0 +1,35 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? FowardAttributes { get; set; }
+
+    [Parameter]
+    public bool Active { get; set; } = false;
+
+    [Parameter]
+    public string? Tooltip { get; set; } = null;
+
+}
+
+<button
+    @attributes=@this.FowardAttributes
+    data-active=@this.Active
+    class="
+        w-full p-4
+        text-center text-[1.5rem] text-defaulttext/50
+        relative flex flex-row justify-center items-center
+        transition-all duration-300 ease-in-out
+        hover:text-primary
+        focus:text-primary
+        [&[data-active]]:text-background [&[data-active]]:bg-primary
+        [&_svg]:w-[1.5rem]
+        group
+    "
+>
+    @this.ChildContent
+</button>

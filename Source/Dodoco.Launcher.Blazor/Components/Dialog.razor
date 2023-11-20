@@ -1,0 +1,24 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    public Modal? Modal { get; protected set; }
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+}
+<Modal Height="h-[40%]" @ref=@this.Modal OnOpen=@(() => this.StateHasChanged()) OnClose=@(() => this.StateHasChanged())>
+    <Panel>
+        <div class="h-full p-8 flex flex-col items-center justify-between gap-4">
+            <h1 class="text-2xl font-bold uppercase text-defaulttext">Fatal Error</h1>
+            <div class="w-[30rem] overflow-y-auto text-center text-defaulttext">
+                @this.ChildContent
+            </div>
+            <div class="w-full inline-flex justify-center gap-8">
+                <Button Outline @onclick=@(() => this.Modal?.Close())>Cancel</Button>
+                <Button @onclick=@(() => this.Modal?.Close())>OK</Button>
+            </div>
+        </div>
+    </Panel>
+</Modal>

@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<PropertyGroup>
+        <Product>Dodoco Launcher</Product>
+        <Version>0.0.41</Version>
+        <FileVersion>0.0.41</FileVersion>
+        <Authors>Brendo Costa</Authors>
+        <Company>https://github.com/BrendoCosta/dodoco-launcher</Company>
+        <Description>2023/11/03</Description>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    </PropertyGroup>
+    <PropertyGroup>
+        <BUNDLE_FOLDER_NAME>Bundle</BUNDLE_FOLDER_NAME>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RootNamespace>Dodoco.Launcher.Blazor</RootNamespace>
+        <AssemblyName>DodocoLauncher</AssemblyName>
+        <ApplicationIcon>./$(BUNDLE_FOLDER_NAME)/favicon.ico</ApplicationIcon>
+        <StartupObject>Dodoco.Launcher.Blazor.Program</StartupObject>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <PlatformTarget>x64</PlatformTarget>
+        <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <Configuration>Release</Configuration>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../../../Dodoco.Core/Source/Dodoco.Core/Dodoco.Core.csproj" />
+        <PackageReference Include="Photino.Blazor" Version="2.6.0" />
+        <PackageReference Include="Ignis.Components" Version="0.13.1" />
+        <PackageReference Include="Ignis.Components.Server" Version="0.13.1" />
+        <PackageReference Include="Ignis.Components.Web" Version="0.13.1" />
+        <PackageReference Include="Ignis.Components.HeadlessUI" Version="0.13.1" />
+        <PackageReference Include="Ignis.Components.HeroIcons" Version="0.13.1" />
+        <PackageReference Include="Ignis.Utils" Version="0.13.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Update="wwwroot/**/*.css" Watch="false" />
+    </ItemGroup>
+    <Target Name="CopyBundleDirectory" BeforeTargets="PreBuildEvent">
+        <Message Text="Copying static bundle assets..." Importance="High" />
+        <ItemGroup>
+            <DODOCO_BUNDLE_FILES Include="./$(BUNDLE_FOLDER_NAME)/**/*.*" />
+        </ItemGroup>
+        <RemoveDir Directories="$(OutDir)/$(BUNDLE_FOLDER_NAME)" />
+        <Copy SourceFiles="@(DODOCO_BUNDLE_FILES)" DestinationFiles="$(OutDir)/$(BUNDLE_FOLDER_NAME)/%(RecursiveDir)%(Filename)%(Extension)" />
+    </Target>
+    <Target Name="BuildBundle" BeforeTargets="PreBuildEvent" DependsOnTargets="CopyBundleDirectory">
+        <Message Text="Building the bundle assets..." Importance="High" />
+        <Exec ConsoleToMsBuild="true" Command="npm i --package-lock-only" StandardOutputImportance="high">
+            <Output TaskParameter="ConsoleOutput" ItemName="OutputOfExec" />
+        </Exec>
+        <Exec ConsoleToMsBuild="true" Command="npx webpack './index.js' --output-path '$(OutDir)/$(BUNDLE_FOLDER_NAME)/Script/' --output-filename index.bundle.js" StandardOutputImportance="high">
+            <Output TaskParameter="ConsoleOutput" ItemName="OutputOfExec" />
+        </Exec>
+    </Target>
+</Project>

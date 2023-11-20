@@ -1,0 +1,76 @@
+@namespace Dodoco.Launcher.Blazor
+
+@using Ignis.Components
+@using Ignis.Components.HeadlessUI
+@using Ignis.Utils
+
+@code {
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Closable { get; set; } = true;
+
+    [Parameter]
+    public string Width { get; set; } = "w-min";
+
+    [Parameter]
+    public string Height { get; set; } = "h-1/2";
+
+    private bool _Open = false;
+    public bool IsOpen { get => this._Open; }
+
+    private bool _StopPropagation = false;
+
+    [Parameter]
+    public EventCallback OnOpen { get; set; }
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    public void Open() {
+
+        this._Open = true;
+        StateHasChanged();
+        this.OnOpen.InvokeAsync();
+
+    }
+
+    public void Close() {
+
+        this._Open = false;
+        StateHasChanged();
+        this.OnClose.InvokeAsync();
+
+    }
+
+}
+<Transition
+    Show=@IsOpen
+    AsComponent="typeof(Fragment)"
+    Enter="transition duration-300"
+    EnterFrom="opacity-0"
+    EnterTo="opacity-100"
+    Leave="transition duration-300 ease-in-out"
+    LeaveFrom="opacity-100"
+    LeaveTo="opacity-0"
+    Context=outerTransition
+>
+    <div class="fixed inset-0 w-full h-full flex flex-col items-center justify-center backdrop-blur bg-white/10 @outerTransition.CssClass" @onclick=@(() => this.Close())>
+        <TransitionChild
+            AsComponent="typeof(Fragment)"
+            Enter="transition duration-300 transform"
+            EnterFrom="opacity-0 scale-50"
+            EnterTo="opacity-100 scale-100"
+            Leave="transition duration-300 ease-in-out transform"
+            LeaveFrom="opacity-100 scale-100"
+            LeaveTo="opacity-0 scale-95"
+            Context=innerTransition
+        >
+            <div @onclick:stopPropagation class="@this.Width @this.Height @innerTransition.CssClass">
+                @this.ChildContent
+            </div>
+        </TransitionChild>
+    </div>
+</Transition>
+

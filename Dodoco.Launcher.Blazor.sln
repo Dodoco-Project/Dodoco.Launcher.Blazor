@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{8BDD03B5-6C55-4EA4-9041-627B72B175DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dodoco.Launcher.Blazor", "Source\Dodoco.Launcher.Blazor\Dodoco.Launcher.Blazor.csproj", "{748B59BA-4302-4754-9635-E649F7E0942A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{748B59BA-4302-4754-9635-E649F7E0942A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748B59BA-4302-4754-9635-E649F7E0942A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748B59BA-4302-4754-9635-E649F7E0942A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748B59BA-4302-4754-9635-E649F7E0942A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{748B59BA-4302-4754-9635-E649F7E0942A} = {8BDD03B5-6C55-4EA4-9041-627B72B175DC}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+@namespace Dodoco.Launcher.Blazor
+
+<nav class="w-full min-h-[20%] flex flex-col justify-center items-center backdrop-blur bg-background shadow-lg rounded [&>*:first-child]:pt-5 [&>*:first-child]:rounded-t [&>*:last-child]:pb-5 [&>*:last-child]:rounded-b">
+    @ChildContent
+</nav>
+
+@code {
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+}

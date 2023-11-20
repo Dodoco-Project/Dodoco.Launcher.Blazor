@@ -1,0 +1,67 @@
+@namespace Dodoco.Launcher.Blazor
+@page "/"
+
+@using Ignis.Components
+@using Ignis.Components.HeadlessUI
+@using Ignis.Components.HeroIcons.Solid
+
+@code {
+
+    private Dialog? testDialog;
+    private TabGroup? mainTabs;
+    private List<string> Categories = new List<string> {"home", "settings", "about"};
+    private Dictionary<string, TabInfo> Tabs = new () {
+        { "Home", new TabInfo { CompType = typeof(Home), IconType = typeof(HomeIcon) } },
+        { "Settings", new TabInfo { CompType = typeof(Settings), IconType = typeof(Cog6ToothIcon) } },
+        { "About", new TabInfo { CompType = typeof(About), IconType = typeof(InformationCircleIcon) } }
+    };
+
+    internal struct TabInfo {
+
+        public Type? CompType { get; set; }
+        public Type? IconType { get; set; }
+        public Dictionary<string, object> Parameters { get; set; }
+
+    }
+
+    protected override void OnAfterRender(bool firstRender) {
+
+        if (firstRender) {
+
+        }
+
+    }
+
+}
+
+<div class="w-full h-full p-4">
+    <div class="w-full h-full flex flex-row gap-4">
+        <TabGroup @ref=@this.mainTabs>
+            <TabList class="w-[4%] h-full flex flex-col justify-center">
+                <Navbar>
+                    @foreach (var item in this.Tabs) {
+                        <Tab @key=item.Key AsComponent="typeof(Fragment)" Context="tab">
+                            <NavbarButton @onclick=@(() => this.mainTabs?.SelectTab(tab)) Active=@tab.IsSelected Tooltip=@item.Key>
+                                <DynamicComponent Type=@item.Value.IconType />
+                            </NavbarButton>
+                        </Tab>
+                    }
+                </Navbar>
+            </TabList>
+            <TabPanels>
+                @foreach (var item in Tabs) {
+                    <TabPanel class="w-full h-full flex flex-col" @key=@item.Key Context="panel">
+                        <DynamicComponent Type=@item.Value.CompType Parameters=@item.Value.Parameters />
+                    </TabPanel>
+                }
+            </TabPanels>
+            <div class="w-[4%] h-full flex flex-row justify-center bg-red-500/10" @onclick=@(() => this.testDialog!.Modal!.Open())>
+            </div>
+        </TabGroup>
+    </div>
+</div>
+<Dodoco.Launcher.Blazor.Dialog @ref=@this.testDialog>
+    <p>I was answering the question you asked inside the text- "Is it a good practice to pass a hardcoded string into an exception constructor?". Combining this approach and the one from Nico's answer will probably give you a comprehensive answer. Note that using Exception directly is generally not considered a good practice and you really should use custom exceptions :) If you want to get this reopened perhaps you could rephrase the question to ask more generally what is a good approach for any class that holds a string meant to be read by a person.</p>
+    <p>Ops!</p>
+    <p>The operation was cancelled by the user.</p>
+</Dodoco.Launcher.Blazor.Dialog>

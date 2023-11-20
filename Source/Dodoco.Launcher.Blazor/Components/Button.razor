@@ -1,0 +1,26 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? FowardAttributes { get; set; }
+
+    [Parameter]
+    public bool Outline { get; set; } = false;
+
+}
+
+<button
+    @attributes=@this.FowardAttributes
+    data-outline=@this.Outline
+    class="
+        transition-all bg-primary text-background px-12 py-2 rounded
+        [&[data-outline]]:(border-2 border-primary bg-transparent text-primary)
+        [&[data-outline]]:hover:(bg-primary text-background)
+    "
+>
+    @this.ChildContent
+</button>

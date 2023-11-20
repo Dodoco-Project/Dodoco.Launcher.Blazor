@@ -1,0 +1,23 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    [Parameter]
+    public string Caption { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+}
+
+<Panel>
+    <div class="h-full p-16 font-sans text-defaulttext flex flex-col">
+        <p class="mb-2 text-primary [text-shadow:0px_0px_8px_var(--tw-shadow-color)] shadow-primary/50">@this.Caption</p>
+        <h1 class="m-0 mb-8 font-bold uppercase text-3xl">@this.Title</h1>
+        <!--<hr class="w-full my-4 border-[1px] border-white/20"/>-->
+        @this.ChildContent
+    </div>
+</Panel>

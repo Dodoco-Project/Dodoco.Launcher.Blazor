@@ -1,0 +1,12 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+}
+
+<div class="w-full h-full rounded backdrop-blur bg-background">
+    @this.ChildContent
+</div>
