@@ -1,0 +1,28 @@
+@namespace Dodoco.Launcher.Blazor
+
+@using Ignis.Components.HeroIcons.Solid
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; } = Guid.NewGuid().ToString();
+
+    [Parameter]
+    public string? Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Value { get; set; } = string.Empty;
+
+}
+
+<div class="flex flex-col gap-y-1">
+    @if (!string.IsNullOrEmpty(this.Label)) {
+        <label for=@this.Name class="text-sm text-primary">@this.Label</label>
+    }
+    <button class="w-full transition-colors inline-flex items-center justify-between gap-x-4 px-4 py-2 rounded text-defaulttext bg-defaulttext/10 border-2 border-transparent focus:(border-2 border-primary) hover:(bg-defaulttext/20)">
+        <input readonly type="text" name=@this.Name class="w-full bg-transparent" @bind=@this.Value>
+        <div class="[&_svg]:w-[1rem] [&_svg]:text-primary">
+            <FolderIcon/>
+        </div>
+    </button>
+</div>

@@ -61,7 +61,13 @@
     </div>
 </div>
 <Dodoco.Launcher.Blazor.Dialog @ref=@this.testDialog>
-    <p>I was answering the question you asked inside the text- "Is it a good practice to pass a hardcoded string into an exception constructor?". Combining this approach and the one from Nico's answer will probably give you a comprehensive answer. Note that using Exception directly is generally not considered a good practice and you really should use custom exceptions :) If you want to get this reopened perhaps you could rephrase the question to ask more generally what is a good approach for any class that holds a string meant to be read by a person.</p>
-    <p>Ops!</p>
-    <p>The operation was cancelled by the user.</p>
+    <Content>
+        <p>I was answering the question you asked inside the text- "Is it a good practice to pass a hardcoded string into an exception constructor?". Combining this approach and the one from Nico's answer will probably give you a comprehensive answer. Note that using Exception directly is generally not considered a good practice and you really should use custom exceptions :) If you want to get this reopened perhaps you could rephrase the question to ask more generally what is a good approach for any class that holds a string meant to be read by a person.</p>
+        <p>Ops!</p>
+        <p>The operation was cancelled by the user.</p>
+    </Content>
+    <Buttons>
+        <Button Outline @onclick=@(() => this.testDialog?.Modal?.Close())>Cancel</Button>
+        <Button @onclick=@(() => this.testDialog?.Modal?.Close())>OK</Button>
+    </Buttons>
 </Dodoco.Launcher.Blazor.Dialog>

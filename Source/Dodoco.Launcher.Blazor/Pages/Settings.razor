@@ -1,5 +1,107 @@
 @namespace Dodoco.Launcher.Blazor
 
+@using Ignis.Components.HeroIcons.Solid
+
+@code {
+
+    string? val = "Portuguese";
+    string choose = "B";
+    string[] values = { "A", "B", "C" };
+
+}
+
 <TabLayout Caption="Menu" Title="Settings">
-    <p>Example</p>
+    <div class="w-full min-w-[60rem] h-full flex flex-col gap-y-4 pr-4 overflow-y-auto">
+        <div class="w-1/4"><TextInput Label="Name" Value="Neofokkusu"/></div>
+        <div class="w-1/4"><FilesystemInput Label="Directory" Value="C:\Users\Genshin"/></div>
+        <p>Choose = @choose</p>
+        <RadioGroup @bind-Selected=choose>
+            @foreach (var item in values) {
+               <RadioButton Name="test" Label=@item Value=@item/> 
+            }
+        </RadioGroup>
+        <div class="flex flex-col gap-y-1">
+            <label for="kraken" class="text-sm text-primary">Select</label>
+            <div class="flex flex-col rounded p-4 gap-y-4 border-2 border-defaulttext/10">
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-full bg-defaulttext/10 w-6 h-6"></div>
+                    <p>Yes</p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-full bg-defaulttext/10 w-6 h-6 flex flex-col items-center justify-center">
+                        <div class="rounded-full bg-primary w-1/2 h-1/2"></div>
+                    </div>
+                    <p>No</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <p class="border-l-4 border-primary p-4">Note</p>
+            <label for="kraken" class="text-sm text-primary">Best waifu</label>
+            <div class="flex flex-col rounded p-4 gap-y-4 border-2 border-defaulttext/10">
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-md bg-defaulttext/10 w-6 h-6"></div>
+                    <p>Venti</p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-md bg-defaulttext/10 w-6 h-6 flex flex-col items-center justify-center">
+                        <div class="rounded-sm bg-primary w-1/2 h-1/2"></div>
+                    </div>
+                    <p>Nahida</p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-md bg-defaulttext/10 w-6 h-6 flex flex-col items-center justify-center">
+                        <div class="rounded-sm bg-primary w-1/2 h-1/2"></div>
+                    </div>
+                    <p>Furina</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <label for="kraken" class="text-sm text-primary">Language</label>
+            <div class="w-1/4 h-full relative [&_*::-webkit-scrollbar-thumb]:p-4">
+                <button class="w-full transition-colors inline-flex items-center justify-between px-4 py-2 rounded text-defaulttext bg-defaulttext/10 [&_svg]:w-[1rem] [&_svg]:text-primary border-2 border-transparent focus:(border-2 border-primary) hover:(bg-defaulttext/20)">
+                    <span>@val</span>
+                    <ChevronDownIcon/>
+                </button>
+                <div class="absolute mt-2 py-2 w-full rounded text-defaulttext backdrop-blur bg-defaulttext/10 overflow-hidden">
+                    <ul class="max-h-24 overflow-y-auto">
+                        <li class="transition-colors w-full px-4 py-2 focus-within:(text-primary bg-defaulttext/20) hover:(text-primary bg-defaulttext/20)"><input @onchange=@(() => val = "Portuguese") type="radio" id="radio1" name="lang" class="opacity-0 w-0 h-0 block"><label for="radio1" class="block w-full">Portuguese</label></li>
+                        <li class="transition-colors w-full px-4 py-2 focus-within:(text-primary bg-defaulttext/20) hover:(text-primary bg-defaulttext/20)"><input @onchange=@(() => val = "English") type="radio" id="radio2" name="lang" class="opacity-0 w-0 h-0 block"><label for="radio2" class="block w-full">English</label></li>
+                        <li class="transition-colors w-full px-4 py-2 focus-within:(text-primary bg-defaulttext/20) hover:(text-primary bg-defaulttext/20)"><input @onchange=@(() => val = "Spanish") type="radio" id="radio3" name="lang" class="opacity-0 w-0 h-0 block"><label for="radio3" class="block w-full">Spanish</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <p class="border-l-4 border-primary p-4">Note</p>
+            <label for="kraken" class="text-sm text-primary">Best waifu</label>
+            <div class="flex flex-col rounded p-4 gap-y-4 border-2 border-defaulttext/10">
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-md bg-defaulttext/10 w-6 h-6"></div>
+                    <p>Venti</p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-md bg-defaulttext/10 w-6 h-6 flex flex-col items-center justify-center">
+                        <div class="rounded-sm bg-primary w-1/2 h-1/2"></div>
+                    </div>
+                    <p>Nahida</p>
+                </div>
+                <div class="inline-flex gap-x-2">
+                    <div class="rounded-md bg-defaulttext/10 w-6 h-6 flex flex-col items-center justify-center">
+                        <div class="rounded-sm bg-primary w-1/2 h-1/2"></div>
+                    </div>
+                    <p>Furina</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <label for="kraken" class="text-sm text-primary">Range</label>
+            <div class="relative flex flex-row items-center gap-x-4">
+                <input type="text" class="w-20 transition-colors px-4 py-2 rounded text-center text-defaulttext bg-defaulttext/10 border-2 border-transparent focus:(border-2 border-primary) hover:(bg-defaulttext/20)" value="100%">
+                <div class="w-full h-2 rounded-md bg-defaulttext/10"></div>
+                <div class="absolute ml-[calc(50% - 1rem)] w-[0.5rem] h-[1rem] rounded-sm bg-primary"></div>
+            </div>
+        </div>
+    </div>
 </TabLayout>

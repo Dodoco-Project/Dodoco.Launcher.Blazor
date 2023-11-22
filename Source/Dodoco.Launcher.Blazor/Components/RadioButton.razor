@@ -1,0 +1,31 @@
+@namespace Dodoco.Launcher.Blazor
+
+@typeparam T
+
+@code {
+
+    [CascadingParameter]
+    public RadioGroup<T> Group { get; set; }
+
+    [Parameter]
+    public string Name { get; set; } = Guid.NewGuid().ToString();
+
+    [Parameter]
+    public string? Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public T Value { get; set; }
+
+}
+
+<div class="transition-all flex flex-row items-center gap-x-2 text-defaulttext focus-within:text-primary">
+    <div class="rounded-full border-2 border-transparent focus-within:border-primary bg-defaulttext/10 w-6 h-6 @(this.Group.Selected.Equals(this.Value) ? "flex flex-col items-center justify-center" : "")" @onclick=@(() => this.Group.UpdateSelected(this.Value)) @onkeypress=@(() => this.Group.UpdateSelected(this.Value))>
+        <input type="radio" name=@this.Name checked=@(this.Group.Selected.Equals(this.Value)) class="opacity-0 w-0 h-0 block">
+        @if (this.Group.Selected.Equals(this.Value)) {
+            <div class="rounded-full bg-primary w-1/2 h-1/2"></div>
+        }
+    </div>
+    @if (!string.IsNullOrEmpty(this.Label)) {
+        <p>@this.Label</p>
+    }
+</div>

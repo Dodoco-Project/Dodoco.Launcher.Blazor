@@ -1,0 +1,27 @@
+@namespace Dodoco.Launcher.Blazor
+
+@typeparam T
+
+@code {
+
+    [Parameter]
+    public T Selected { get; set; }
+
+    [Parameter]
+	public EventCallback<T> SelectedChanged { get; set; }
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+    public void UpdateSelected(T newValue) {
+
+        this.Selected = newValue;
+        this.SelectedChanged.InvokeAsync(newValue);
+
+    }
+
+}
+
+<CascadingValue Value=@this>
+    @this.ChildContent
+</CascadingValue>
