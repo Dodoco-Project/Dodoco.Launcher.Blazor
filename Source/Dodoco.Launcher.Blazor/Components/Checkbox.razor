@@ -1,0 +1,58 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    public const int TransitionDuration = 200;
+
+    [Parameter]
+    public string Name { get; set; } = Guid.NewGuid().ToString();
+
+    [Parameter]
+    public string? Label { get; set; } = string.Empty;
+    private string LabelId = Guid.NewGuid().ToString();
+
+    [Parameter]
+    public bool Checked { get; set; } = false;
+
+    [Parameter]
+	public EventCallback<bool> CheckedChanged { get; set; }
+
+    private bool CanClick { get; set; } = true;
+
+    private async Task UpdateChecked() {
+
+        if (!this.CanClick)
+            return;
+
+        this.CanClick = false;
+        this.Checked = !this.Checked;
+        await Task.Delay(Checkbox.TransitionDuration);
+        this.CanClick = true;
+        await this.CheckedChanged.InvokeAsync(this.Checked);
+
+    }
+
+}
+
+<div class="inline-flex gap-x-2">
+    <div class="flex flex-row gap-x-2 focus-within:text-primary">
+        <div role="checkbox" id=@this.Name name=@this.Name tabindex="0" aria-labelledby=@this.LabelId aria-checked=@this.Checked class="rounded-md bg-defaulttext/10 w-6 h-6 flex flex-col items-center justify-center border-2 border-transparent focus-within:border-primary" @onclick=@(() => this.UpdateChecked()) @onkeypress:preventDefault @onkeypress=@((e) => { if (e.Code == "Space") this.UpdateChecked(); })>
+            <Ignis.Components.HeadlessUI.Transition
+                Show=@this.Checked
+                AsComponent="typeof(Ignis.Components.Fragment)"
+                Enter=@($"transition duration-[{Checkbox.TransitionDuration}ms] transforme ease-in-out")
+                EnterFrom="scale-0"
+                EnterTo="scale-100"
+                Leave=@($"transition duration-[{Checkbox.TransitionDuration}ms] transforme ease-in-out")
+                LeaveFrom="scale-100"
+                LeaveTo=@(this.Checked ? "scale-100" : "scale-0" /* Workaround for the checked dot not showing after unchecking and rechecking too quickly */ )
+                Context=markTransition
+            >
+                <div class="rounded-sm bg-primary w-1/2 h-1/2 @markTransition.CssClass"></div>
+            </Ignis.Components.HeadlessUI.Transition>
+        </div>
+        @if (!string.IsNullOrEmpty(this.Label)) {
+            <label id=@this.LabelId>@this.Label</label>
+        }
+    </div>
+</div>

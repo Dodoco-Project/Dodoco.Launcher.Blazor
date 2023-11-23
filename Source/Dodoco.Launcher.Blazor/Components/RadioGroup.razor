@@ -4,6 +4,8 @@
 
 @code {
 
+    public const int TransitionDuration = 200;
+
     [Parameter]
     public T Selected { get; set; }
 
@@ -13,10 +15,11 @@
     [Parameter]
 	public RenderFragment? ChildContent { get; set; }
 
-    public void UpdateSelected(T newValue) {
+    public async Task UpdateSelected(T newValue) {
 
         this.Selected = newValue;
-        this.SelectedChanged.InvokeAsync(newValue);
+        await Task.Delay(TransitionDuration);
+        await this.SelectedChanged.InvokeAsync(newValue);
 
     }
 

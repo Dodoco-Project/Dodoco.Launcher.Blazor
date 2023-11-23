@@ -16,14 +16,28 @@
     [Parameter]
     public T Value { get; set; }
 
+    public bool IsChecked { get => this.Group.Selected.Equals(this.Value); }
+
+    private async Task UpdateGroup() => await this.Group.UpdateSelected(this.Value);
+
 }
 
 <div class="transition-all flex flex-row items-center gap-x-2 text-defaulttext focus-within:text-primary">
-    <div class="rounded-full border-2 border-transparent focus-within:border-primary bg-defaulttext/10 w-6 h-6 @(this.Group.Selected.Equals(this.Value) ? "flex flex-col items-center justify-center" : "")" @onclick=@(() => this.Group.UpdateSelected(this.Value)) @onkeypress=@(() => this.Group.UpdateSelected(this.Value))>
-        <input type="radio" name=@this.Name checked=@(this.Group.Selected.Equals(this.Value)) class="opacity-0 w-0 h-0 block">
-        @if (this.Group.Selected.Equals(this.Value)) {
-            <div class="rounded-full bg-primary w-1/2 h-1/2"></div>
-        }
+    <div class="transition-colors rounded-full w-6 h-6 flex flex-col items-center justify-center border-2 border-transparent focus-within:border-primary bg-defaulttext/10 hover:bg-defaulttext/20" @onclick=@UpdateGroup @onkeypress=@UpdateGroup>
+        <input type="radio" name=@this.Name checked=@this.IsChecked class="opacity-0 w-0 h-0 block">
+        <Ignis.Components.HeadlessUI.Transition
+            Show=@this.IsChecked
+            AsComponent="typeof(Ignis.Components.Fragment)"
+            Enter=@($"transition duration-[{RadioGroup<T>.TransitionDuration}ms] transforme ease-in-out")
+            EnterFrom="scale-0"
+            EnterTo="scale-100"
+            Leave=@($"transition duration-[{RadioGroup<T>.TransitionDuration}ms] transform ease-in-out")
+            LeaveFrom="scale-100"
+            LeaveTo=@(this.IsChecked ? "scale-100" : "scale-0" /* Workaround for the checked dot not showing after unchecking and rechecking too quickly */ )
+            Context=dotTransition
+        >
+            <div class="rounded-full bg-primary w-1/2 h-1/2 @dotTransition.CssClass"></div>
+        </Ignis.Components.HeadlessUI.Transition>
     </div>
     @if (!string.IsNullOrEmpty(this.Label)) {
         <p>@this.Label</p>

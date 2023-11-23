@@ -1,0 +1,20 @@
+@namespace Dodoco.Launcher.Blazor
+
+@code {
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Legend { get; set; } = string.Empty;
+
+}
+
+<div class="flex flex-col gap-y-1">
+    @if (!string.IsNullOrEmpty(this.Legend)) {
+        <legend class="text-sm text-primary">@this.Legend</legend>
+    }
+    <div class="flex flex-col gap-y-4 rounded p-4 border-2 border-defaulttext/10">
+        @this.ChildContent
+    </div>
+</div>
